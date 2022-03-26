@@ -51,5 +51,69 @@ Print all information to the console using standard output (System.out.print() o
 Outputs must be exact (exact spaces and casing).*/
 
 
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+string split(string s){
+    if(s.length() == 0) return " ";
+    string out ="";
+    for(auto i : s){
+        if(isupper(i)) out +=" ";
+        out +=i; 
+    }
+    transform(out.begin(),out.end(),out.begin(),::tolower);
+    if(out[0] == ' ') out = out.substr(1,out.length()-1);
+    return out;
+}
+string combine(string s,bool flag){
+    if(s.length() == 0) return " ";
+    string out ="";
+    for(auto i: s){
+        if(i == ' ') flag = true;
+        else if(flag){
+            out += toupper(i);
+            flag = false;
+        }
+        else out += i;
+    }
+    return out;
+}
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    string input;
+    while (getline(cin, input)) {
+        string str;
+        string result ="";
+        // cout<<"in: "<<input<<endl;
+        for(auto i : input){
+            if(i == '\r' || i == '\t' || i == '\n')  continue;
+            str += i;
+        }
+            
+        
+        
+        if(str[0] == 'S'){
+            if(str[2] == 'M') result = split(str.substr(4,str.length() -4 -2));
+            else if(str[2] == 'V') result = split(str.substr(4,str.length() -4));
+            else result = split(str.substr(4,str.length() -4));
+        }  
+        else{
+            if(str[2] == 'M') result = combine(str.substr(4,str.length() -4),false)+"()";
+            else if(str[2] == 'V') result = combine(str.substr(4,str.length() -4),false);
+            else result = combine(str.substr(4,str.length() -4),true);
+            
+        }  
+        cout<<result<<endl;
+
+    }
+    return 0;
+}
+
+
 
 
